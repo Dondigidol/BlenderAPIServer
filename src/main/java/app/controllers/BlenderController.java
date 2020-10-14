@@ -4,20 +4,32 @@ import app.entities.Item2080;
 import app.entities.ItemAvs;
 import app.entities.ItemError;
 import app.services.BlenderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/product")
 public class BlenderController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BlenderController.class);
+
     @Autowired
     private BlenderService blenderService;
 
     @GetMapping("/avs")
-    public ResponseEntity<?> getAvs(@RequestParam("item") int item){
+    public ResponseEntity<?> getAvs(@RequestParam("item") int item,
+                                    HttpServletRequest request){
+
+        logger.info("Client: " + request.getRemoteAddr() + ", request: AVS for '" + item + "'" );
 
         String targetItem = String.valueOf(item);
         ItemAvs resultItem = blenderService.getAvs(targetItem);
@@ -32,7 +44,10 @@ public class BlenderController {
 
     @GetMapping("/2080")
     public ResponseEntity<?> get2080(@RequestParam("item") int item,
-                                     @RequestParam("store") int store){
+                                     @RequestParam("store") int store,
+                                     HttpServletRequest request){
+
+        logger.info("Client: " + request.getRemoteAddr() + ", request: 2080 for '" + item + "' in store '" + store + "'" );
 
         String targetStore = String.valueOf(store);
         while (targetStore.length()<3){
@@ -48,11 +63,11 @@ public class BlenderController {
             return new ResponseEntity<>(itemError, HttpStatus.NOT_FOUND);
         }
         switch (resultItem.getStatus_code()){
-            case 0:
-                resultItem.setStatus("80/20");
-                break;
             case 1:
                 resultItem.setStatus("20/80");
+                break;
+            default:
+                resultItem.setStatus("80/20");
                 break;
 
         }

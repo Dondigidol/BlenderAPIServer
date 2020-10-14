@@ -1,10 +1,15 @@
 package app.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Item2080 {
 
     private int item;
 
-    private String date;
+    @JsonFormat(pattern = "dd.MM.yyyy")
+    private Date date;
 
     private int status_code;
 
@@ -18,11 +23,11 @@ public class Item2080 {
         this.item = item;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -42,7 +47,7 @@ public class Item2080 {
         this.status_code = status_code;
     }
 
-    public Item2080(int item, String date, int status_code) {
+    public Item2080(int item, Date date, int status_code) {
         this.item = item;
         this.date = date;
         this.status_code = status_code;

@@ -2,6 +2,8 @@ package app.services;
 
 import app.entities.Item2080;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +32,8 @@ public class BlenderJDBCService {
 
     private JdbcTemplate jdbcTemplate;
 
+    private static final Logger logger = LoggerFactory.getLogger(BlenderJDBCService.class);
+
     private void setConnection(){
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
@@ -51,7 +55,7 @@ public class BlenderJDBCService {
                 new RowMapper<Item2080>() {
                     @Override
                     public Item2080 mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        return new Item2080(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                        return new Item2080(rs.getInt(1), rs.getDate(2), rs.getInt(3));
                     }
                 }
 

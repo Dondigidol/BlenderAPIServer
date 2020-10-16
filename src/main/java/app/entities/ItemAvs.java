@@ -15,6 +15,7 @@ import java.util.Date;
 @Immutable
 @Subselect("SELECT ITEM, UDA_DATE, MAX(LAST_UPDATE_DATETIME) as last_update " +
         "FROM DataLake_View.dbo.RMS_V_T_UDA_ITEM_DATE rvtuid " +
+        "WHERE UDA_ID = 6 " +
         "GROUP BY ITEM, UDA_DATE ")
 public class ItemAvs {
 

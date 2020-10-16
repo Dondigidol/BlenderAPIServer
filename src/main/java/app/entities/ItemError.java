@@ -4,6 +4,7 @@ public class ItemError {
 
     private String item;
     private String error;
+    private int status;
 
     public String getItem() {
         return item;
@@ -19,5 +20,19 @@ public class ItemError {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public ItemError(String item, String error, int status) {
+        this.item = item;
+        this.error = error;
+        this.status = status;
     }
 }

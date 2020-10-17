@@ -9,6 +9,6 @@ COPY target/libs/ ./libs/
 COPY ${JAR_FILE} "app.jar"
 COPY config/ ./config/
 
-EXPOSE 6000:8080
+EXPOSE 8080:8080
 
 CMD java -jar app.jar

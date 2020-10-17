@@ -1,3 +1,5 @@
-/config/
 /target/
 /log/
+/config/application-prod.properties
+/config/application.properties
+/certs/

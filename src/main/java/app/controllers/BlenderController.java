@@ -78,14 +78,10 @@ public class BlenderController {
             ItemError itemError = new ItemError(String.valueOf(item), errorMessage, HttpStatus.NOT_FOUND.value());
             return new ResponseEntity<>(itemError, HttpStatus.NOT_FOUND);
         }
-        switch (resultItem.getStatus_code()){
-            case 1:
+        if (resultItem.getStatus_code() == 1){
                 resultItem.setStatus("20/80");
-                break;
-            default:
+        } else {
                 resultItem.setStatus("80/20");
-                break;
-
         }
 
         return new ResponseEntity<>(resultItem, HttpStatus.OK);
@@ -95,7 +91,7 @@ public class BlenderController {
     private boolean checkToken(HttpServletRequest request){
         String token = request.getHeader("x-api-key");
         if (token == null || !token.equals(xApiKey)){
-            logger.error("Client: " + request.getRemoteHost() + ", x-api-key header is Wrong OR empty, OR this header is not exist!");
+            logger.error("Client: " + request.getRemoteAddr() + ", x-api-key header is Wrong OR empty, OR this header is not exist!");
             return false;
         } else {
             return true;
